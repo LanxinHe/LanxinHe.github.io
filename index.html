@@ -165,6 +165,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/25/establish-Pytorch-env-using-Anaconda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Nancy.jpg">
+      <meta itemprop="name" content="HE lanxin">
+      <meta itemprop="description" content="Flung out of space">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nancy's Land">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/07/25/establish-Pytorch-env-using-Anaconda/" class="post-title-link" itemprop="url">establish Pytorch env using Anaconda</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-07-25 21:30:24" itemprop="dateCreated datePublished" datetime="2022-07-25T21:30:24+08:00">2022-07-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-26 00:24:58" itemprop="dateModified" datetime="2022-07-26T00:24:58+08:00">2022-07-26</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Since I recently reinstall the system and reset my PC, previous python environment has been deleted. Therefore, I need to re-establish the env and record this procedure here.</p>
+<h1 id="Install-Anaconda">Install Anaconda</h1>
+<ol>
+<li><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725224017592.png" alt="image-20220725224017592"></li>
+</ol>
+<p>(A great chance to install an up-to-date Anaconda 😄</p>
+<ol start="2">
+<li>configure the environment variables (restart required)</li>
+</ol>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725230106957.png" alt="image-20220725230106957"></p>
+<ol start="3">
+<li>
+<p>validate the installation</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda --version</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725230759390.png" alt="image-20220725230759390"></p>
+</li>
+</ol>
+<h1 id="Use-conda-to-establish-the-env">Use conda to establish the env</h1>
+<ol>
+<li>
+<p>PyTorch only supports python 3.7 - 3.9 at present. Consider that many of my previous codes are written by python 3.6, I create a new env based on python 3.7 in case of the compatible problem.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n name_of_env python=x.x</span><br></pre></td></tr></table></figure>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725231919866.png" alt="image-20220725231919866"></p>
+<p>BTW, if you do not have any VPN, you can configure tsinghua open source mirror using the following command:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span><br><span class="line"></span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls <span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line">conda config --show channels</span><br></pre></td></tr></table></figure>
+<p>Check all the envs now</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda info --<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725233704519.png" alt="image-20220725233704519"></p>
+<p>Activate pytorch env and switch to it:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate pytorch</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install PyTorch</p>
+</li>
+</ol>
+<p>CUDA version : 10.2;</p>
+<p>Unfortunately, CUDA-10.2 PyTorch builds are no longer available for Windows. Since I seldom use GPU for acceleration, at this time I just install the CPU version of PyTorch.</p>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725231406885.png" alt="image-20220725231406885"></p>
+<p>We can easily get the installation down following the instruction at <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">PyTorch website</a>.</p>
+<p>Here I just need the cpuonly version</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio cpuonly -c pytorch</span><br></pre></td></tr></table></figure>
+<p>It seems that owing a personal VPN would NOT help make this procedure faster… and I feel really sleepy… Under this case, I just recommend directly downloading the required package at <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/win-64/?C=M&amp;O=D">Tsinghua open source mirror</a>. Before static installation, we need to remove those half-installed packages manually (my path is <code>C:\Users\Nancy\.conda\pkgs</code>):</p>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725235703043.png" alt="image-20220725235703043"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install --offline C:\Users\Nancy\.conda\pkgs\pytorch-1.12.0-py3.7_cpu_0.tar.bz2</span><br><span class="line">conda install --offline C:\Users\Nancy\.conda\pkgs\torchvision-0.13.0-py37_cpu.tar.bz2</span><br></pre></td></tr></table></figure>
+<p>Validate if the envs has been successfully established:</p>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726001943955.png" alt="image-20220726001943955"></p>
+<p>To this end, the PyTorch environment has been constructed.</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/19/Latex-test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -399,10 +510,16 @@ $$</p>
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-07-19 10:40:48 / Modified: 19:07:20" itemprop="dateCreated datePublished" datetime="2022-07-19T10:40:48+08:00">2022-07-19</time>
+              <time title="Created: 2022-07-19 10:40:48" itemprop="dateCreated datePublished" datetime="2022-07-19T10:40:48+08:00">2022-07-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-07-25 21:33:08" itemprop="dateModified" datetime="2022-07-25T21:33:08+08:00">2022-07-25</time>
+              </span>
 
           
 
@@ -427,6 +544,9 @@ $$</p>
 <p>Congratulations! Broken down once again! Re-install the driver at <a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/search.html?ws=text#q=hd%20graphics%20630%20driver&amp;sort=relevancy&amp;layout=table&amp;f:@tabfilter=%5BDownloads%5D">Intel Website</a>…</p>
 <p><img src="/2022/07/19/fix/3.png" alt="3"></p>
 <p>Wish me luck 😃</p>
+<hr>
+<p>Broke down again 😦</p>
+<p>I finally decided to reinstall the windows system and reset my PC. Till now the blue screen has been solved.</p>
 
       
     </div>
@@ -579,7 +699,7 @@ $$</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
