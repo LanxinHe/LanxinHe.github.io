@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-26 00:24:58" itemprop="dateModified" datetime="2022-07-26T00:24:58+08:00">2022-07-26</time>
+                <time title="Modified: 2022-07-26 14:05:18" itemprop="dateModified" datetime="2022-07-26T14:05:18+08:00">2022-07-26</time>
               </span>
 
           
@@ -254,9 +254,27 @@
 <p>It seems that owing a personal VPN would NOT help make this procedure faster… and I feel really sleepy… Under this case, I just recommend directly downloading the required package at <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/win-64/?C=M&amp;O=D">Tsinghua open source mirror</a>. Before static installation, we need to remove those half-installed packages manually (my path is <code>C:\Users\Nancy\.conda\pkgs</code>):</p>
 <p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725235703043.png" alt="image-20220725235703043"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install --offline C:\Users\Nancy\.conda\pkgs\pytorch-1.12.0-py3.7_cpu_0.tar.bz2</span><br><span class="line">conda install --offline C:\Users\Nancy\.conda\pkgs\torchvision-0.13.0-py37_cpu.tar.bz2</span><br></pre></td></tr></table></figure>
-<p>Validate if the envs has been successfully established:</p>
+<p>Validate if the env has been successfully established:</p>
 <p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726001943955.png" alt="image-20220726001943955"></p>
 <p>To this end, the PyTorch environment has been constructed.</p>
+<h1 id="Configure-PyCharm">Configure PyCharm</h1>
+<p>add the interpreter (index to <code>python.exe</code> under the pytorch env)</p>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726113117953.png" alt="image-20220726113117953"></p>
+<p>In editor, we can easily see those packages that have not installed.</p>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726113904354.png" alt="image-20220726113904354"></p>
+<p>Use the following command to install the packages required:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pandas matplotlib scipy scikit-learn</span><br></pre></td></tr></table></figure>
+<p>When building torch-sparse and torch-scatter, ‘Failed building wheel for xxx’ problem encountered.</p>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726123100196.png" alt="image-20220726123100196"></p>
+<p>However, there are no whl files for torch-1.12.0 at this <a target="_blank" rel="noopener" href="https://pytorch-geometric.com/whl/torch-1.12.0%2Bcpu.html">whl file website of PyTorch</a>. Considering this, I just decided to create a new env based on PyTorch-1.11.0:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda remove -n pytorch --all</span><br><span class="line">conda create -n pytorch python=3.7</span><br><span class="line">conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cpuonly -c pytorch</span><br></pre></td></tr></table></figure>
+<p>and use the following to install torch-sparse and torch-scatter (downloading the whl files at first):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install &quot;C:\Users\Nancy\Downloads\torch_sparse-0.6.13-cp37-cp37m-win_amd64.whl&quot;</span><br><span class="line">pip install &quot;C:\Users\Nancy\Downloads\torch_scatter-2.0.9-cp37-cp37m-win_amd64.whl&quot;</span><br></pre></td></tr></table></figure>
+<p>then use <code>pip install sparselinear</code> to download this critical package for my own code.</p>
+<h1 id="Link-Jupyter-to-this-PyTorch-env">Link Jupyter to this PyTorch env</h1>
+<p>In some cases, the demo programs are written in Jupyter notebook, so the last thing we need to do is to link jupyter with the established env rather than base env.</p>
+<p>This can be done following the instructions on <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43718238/article/details/112916221">my previous note</a></p>
+<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726140339177.png" alt="image-20220726140339177"></p>
 
       
     </div>
