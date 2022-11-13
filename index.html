@@ -76,7 +76,11 @@
   </style>
 </noscript>
 
-</head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -210,74 +214,128 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Since I recently reinstall the system and reset my PC, previous python environment has been deleted. Therefore, I need to re-establish the env and record this procedure here.</p>
-<h1 id="Install-Anaconda">Install Anaconda</h1>
-<ol>
-<li>
-<p>download the newest Anaconda installer at <a target="_blank" rel="noopener" href="https://www.anaconda.com/">its website</a></p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725224017592.png" alt="image-20220725224017592"></p>
-</li>
+          <p>Since I recently reinstall the system and reset my PC, previous
+python environment has been deleted. Therefore, I need to re-establish
+the env and record this procedure here.</p>
+<h1 id="install-anaconda">Install Anaconda</h1>
+<ol type="1">
+<li><p>download the newest Anaconda installer at <a target="_blank" rel="noopener" href="https://www.anaconda.com/">its website</a></p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725224017592.png" alt="image-20220725224017592">
+<figcaption aria-hidden="true">image-20220725224017592</figcaption>
+</figure></li>
 </ol>
-<p>(A great chance to install an up-to-date Anaconda 😄</p>
-<ol start="2">
+<p>(A great chance to install an up-to-date Anaconda :smile:</p>
+<ol start="2" type="1">
 <li>configure the environment variables (restart required)</li>
 </ol>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725230106957.png" alt="image-20220725230106957"></p>
-<ol start="3">
-<li>
-<p>validate the installation</p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725230106957.png" alt="image-20220725230106957">
+<figcaption aria-hidden="true">image-20220725230106957</figcaption>
+</figure>
+<ol start="3" type="1">
+<li><p>validate the installation</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda --version</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725230759390.png" alt="image-20220725230759390"></p>
-</li>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725230759390.png" alt="image-20220725230759390">
+<figcaption aria-hidden="true">image-20220725230759390</figcaption>
+</figure></li>
 </ol>
-<h1 id="Use-conda-to-establish-the-env">Use conda to establish the env</h1>
-<ol>
-<li>
-<p>PyTorch only supports python 3.7 - 3.9 at present. Consider that many of my previous codes are written by python 3.6, I create a new env based on python 3.7 in case of the compatible problem.</p>
+<h1 id="use-conda-to-establish-the-env">Use conda to establish the
+env</h1>
+<ol type="1">
+<li><p>PyTorch only supports python 3.7 - 3.9 at present. Consider that
+many of my previous codes are written by python 3.6, I create a new env
+based on python 3.7 in case of the compatible problem.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n name_of_env python=x.x</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725231919866.png" alt="image-20220725231919866"></p>
-<p>BTW, if you do not have any VPN, you can configure tsinghua open source mirror using the following command:</p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725231919866.png" alt="image-20220725231919866">
+<figcaption aria-hidden="true">image-20220725231919866</figcaption>
+</figure>
+<p>BTW, if you do not have any VPN, you can configure tsinghua open
+source mirror using the following command:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/pro</span><br><span class="line">conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span><br><span class="line"></span><br><span class="line">conda config --<span class="built_in">set</span> show_channel_urls <span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line">conda config --show channels</span><br></pre></td></tr></table></figure>
 <p>Check all the envs now</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda info --<span class="built_in">env</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725233704519.png" alt="image-20220725233704519"></p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725233704519.png" alt="image-20220725233704519">
+<figcaption aria-hidden="true">image-20220725233704519</figcaption>
+</figure>
 <p>Activate pytorch env and switch to it:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate pytorch</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Install PyTorch</p>
-</li>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate pytorch</span><br></pre></td></tr></table></figure></li>
+<li><p>Install PyTorch</p></li>
 </ol>
 <p>CUDA version : 10.2;</p>
-<p>Unfortunately, CUDA-10.2 PyTorch builds are no longer available for Windows. Since I seldom use GPU for acceleration, at this time I just install the CPU version of PyTorch.</p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725231406885.png" alt="image-20220725231406885"></p>
-<p>We can easily get the installation down following the instruction at <a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">PyTorch website</a>.</p>
+<p>Unfortunately, CUDA-10.2 PyTorch builds are no longer available for
+Windows. Since I seldom use GPU for acceleration, at this time I just
+install the CPU version of PyTorch.</p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725231406885.png" alt="image-20220725231406885">
+<figcaption aria-hidden="true">image-20220725231406885</figcaption>
+</figure>
+<p>We can easily get the installation down following the instruction at
+<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/locally/">PyTorch
+website</a>.</p>
 <p>Here I just need the cpuonly version</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pytorch torchvision torchaudio cpuonly -c pytorch</span><br></pre></td></tr></table></figure>
-<p>It seems that owing a personal VPN would NOT help make this procedure faster… and I feel really sleepy… Under this case, I just recommend directly downloading the required package at <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/win-64/?C=M&amp;O=D">Tsinghua open source mirror</a>. Before static installation, we need to remove those half-installed packages manually (my path is <code>C:\Users\Nancy\.conda\pkgs</code>):</p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725235703043.png" alt="image-20220725235703043"></p>
+<p>It seems that owing a personal VPN would NOT help make this procedure
+faster... and I feel really sleepy... Under this case, I just recommend
+directly downloading the required package at <a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/win-64/?C=M&amp;O=D">Tsinghua
+open source mirror</a>. Before static installation, we need to remove
+those half-installed packages manually (my path is
+<code>C:\Users\Nancy\.conda\pkgs</code>):</p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220725235703043.png" alt="image-20220725235703043">
+<figcaption aria-hidden="true">image-20220725235703043</figcaption>
+</figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda install --offline C:\Users\Nancy\.conda\pkgs\pytorch-1.12.0-py3.7_cpu_0.tar.bz2</span><br><span class="line">conda install --offline C:\Users\Nancy\.conda\pkgs\torchvision-0.13.0-py37_cpu.tar.bz2</span><br></pre></td></tr></table></figure>
 <p>Validate if the env has been successfully established:</p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726001943955.png" alt="image-20220726001943955"></p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726001943955.png" alt="image-20220726001943955">
+<figcaption aria-hidden="true">image-20220726001943955</figcaption>
+</figure>
 <p>To this end, the PyTorch environment has been constructed.</p>
-<h1 id="Configure-PyCharm">Configure PyCharm</h1>
-<p>add the interpreter (index to <code>python.exe</code> under the pytorch env)</p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726113117953.png" alt="image-20220726113117953"></p>
-<p>In editor, we can easily see those packages that have not installed.</p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726113904354.png" alt="image-20220726113904354"></p>
+<h1 id="configure-pycharm">Configure PyCharm</h1>
+<p>add the interpreter (index to <code>python.exe</code> under the
+pytorch env)</p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726113117953.png" alt="image-20220726113117953">
+<figcaption aria-hidden="true">image-20220726113117953</figcaption>
+</figure>
+<p>In editor, we can easily see those packages that have not
+installed.</p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726113904354.png" alt="image-20220726113904354">
+<figcaption aria-hidden="true">image-20220726113904354</figcaption>
+</figure>
 <p>Use the following command to install the packages required:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install pandas matplotlib scipy scikit-learn</span><br></pre></td></tr></table></figure>
-<p>When building torch-sparse and torch-scatter, ‘Failed building wheel for xxx’ problem encountered.</p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726123100196.png" alt="image-20220726123100196"></p>
-<p>However, there are no whl files for torch-1.12.0 at this <a target="_blank" rel="noopener" href="https://pytorch-geometric.com/whl/torch-1.12.0%2Bcpu.html">whl file website of PyTorch</a>. Considering this, I just decided to create a new env based on PyTorch-1.11.0:</p>
+<p>When building torch-sparse and torch-scatter, 'Failed building wheel
+for xxx' problem encountered.</p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726123100196.png" alt="image-20220726123100196">
+<figcaption aria-hidden="true">image-20220726123100196</figcaption>
+</figure>
+<p>However, there are no whl files for torch-1.12.0 at this <a target="_blank" rel="noopener" href="https://pytorch-geometric.com/whl/torch-1.12.0%2Bcpu.html">whl
+file website of PyTorch</a>. Considering this, I just decided to create
+a new env based on PyTorch-1.11.0:</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda remove -n pytorch --all</span><br><span class="line">conda create -n pytorch python=3.7</span><br><span class="line">conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cpuonly -c pytorch</span><br></pre></td></tr></table></figure>
-<p>and use the following to install torch-sparse and torch-scatter (downloading the whl files at first):</p>
+<p>and use the following to install torch-sparse and torch-scatter
+(downloading the whl files at first):</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install &quot;C:\Users\Nancy\Downloads\torch_sparse-0.6.13-cp37-cp37m-win_amd64.whl&quot;</span><br><span class="line">pip install &quot;C:\Users\Nancy\Downloads\torch_scatter-2.0.9-cp37-cp37m-win_amd64.whl&quot;</span><br></pre></td></tr></table></figure>
-<p>then use <code>pip install sparselinear</code> to download this critical package for my own code.</p>
-<h1 id="Link-Jupyter-to-this-PyTorch-env">Link Jupyter to this PyTorch env</h1>
-<p>In some cases, the demo programs are written in Jupyter notebook, so the last thing we need to do is to link jupyter with the established env rather than base env.</p>
-<p>This can be done following the instructions on <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43718238/article/details/112916221">my previous note</a></p>
-<p><img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726140339177.png" alt="image-20220726140339177"></p>
+<p>then use <code>pip install sparselinear</code> to download this
+critical package for my own code.</p>
+<h1 id="link-jupyter-to-this-pytorch-env">Link Jupyter to this PyTorch
+env</h1>
+<p>In some cases, the demo programs are written in Jupyter notebook, so
+the last thing we need to do is to link jupyter with the established env
+rather than base env.</p>
+<p>This can be done following the instructions on <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43718238/article/details/112916221">my
+previous note</a></p>
+<figure>
+<img src="/2022/07/25/establish-Pytorch-env-using-Anaconda/image-20220726140339177.png" alt="image-20220726140339177">
+<figcaption aria-hidden="true">image-20220726140339177</figcaption>
+</figure>
 
       
     </div>
@@ -320,10 +378,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-07-19 19:14:49 / Modified: 19:17:51" itemprop="dateCreated datePublished" datetime="2022-07-19T19:14:49+08:00">2022-07-19</time>
+              <time title="Created: 2022-07-19 19:14:49" itemprop="dateCreated datePublished" datetime="2022-07-19T19:14:49+08:00">2022-07-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-11-13 10:29:48" itemprop="dateModified" datetime="2022-11-13T10:29:48+08:00">2022-11-13</time>
+              </span>
 
           
 
@@ -336,10 +400,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>This a testing blog for Latex compile.<br>
-$$<br>
-f(x) = \sum_{i=0}^{N} a_i \sqrt{x}<br>
-$$</p>
+          <p>This a testing blog for Latex compile. <span class="math display">\[
+f(x) = \sum_{i=0}^{N} a_i \sqrt{x}
+\]</span></p>
 
       
     </div>
@@ -404,21 +467,34 @@ $$</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>A few days ago, my PC encountered a blue screen problem with code “video_ dxgkrnl_ fatal_ error”</p>
-<p><img src="/2022/07/19/fix/image1.png" alt></p>
-<p>After trying clean boot, troubleshooting, and windows update, the blue screen crack still come up frequently, which is really annoying.</p>
+          <p>A few days ago, my PC encountered a blue screen problem with code
+"video_ dxgkrnl_ fatal_ error"</p>
+<p><img src="/2022/07/19/fix/image1.png"></p>
+<p>After trying clean boot, troubleshooting, and windows update, the
+blue screen crack still come up frequently, which is really
+annoying.</p>
 <hr>
-<p>Here is just for a record to do with the last fix I implemented: re-install the displayer driver.</p>
-<p>I manually install the latest driver for NVIDIA GeForce GTX 1050 on NVIDIA website.</p>
-<p><img src="/2022/07/19/fix/20220719_025214410_iOS.png" alt></p>
-<p>Unfortunately, the blue screen crack just become less frequent, but still occurs. I guess further re-install for Intel Graphics driver is required, but before that, a new windows update has been carried on. Let’s see whether the crack would appear once again.</p>
+<p>Here is just for a record to do with the last fix I implemented:
+re-install the displayer driver.</p>
+<p>I manually install the latest driver for NVIDIA GeForce GTX 1050 on
+NVIDIA website.</p>
+<p><img src="/2022/07/19/fix/20220719_025214410_iOS.png"></p>
+<p>Unfortunately, the blue screen crack just become less frequent, but
+still occurs. I guess further re-install for Intel Graphics driver is
+required, but before that, a new windows update has been carried on.
+Let's see whether the crack would appear once again.</p>
 <hr>
-<p>Congratulations! Broken down once again! Re-install the driver at <a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/search.html?ws=text#q=hd%20graphics%20630%20driver&amp;sort=relevancy&amp;layout=table&amp;f:@tabfilter=%5BDownloads%5D">Intel Website</a>…</p>
-<p><img src="/2022/07/19/fix/3.png" alt="3"></p>
-<p>Wish me luck 😃</p>
+<p>Congratulations! Broken down once again! Re-install the driver at <a target="_blank" rel="noopener" href="https://www.intel.com/content/www/us/en/search.html?ws=text#q=hd%20graphics%20630%20driver&amp;sort=relevancy&amp;layout=table&amp;f:@tabfilter=%5BDownloads%5D">Intel
+Website</a>...</p>
+<figure>
+<img src="/2022/07/19/fix/3.png" alt="3">
+<figcaption aria-hidden="true">3</figcaption>
+</figure>
+<p>Wish me luck :)</p>
 <hr>
-<p>Broke down again 😦</p>
-<p>I finally decided to reinstall the windows system and reset my PC. Till now the blue screen has been solved.</p>
+<p>Broke down again :(</p>
+<p>I finally decided to reinstall the windows system and reset my PC.
+Till now the blue screen has been solved.</p>
 
       
     </div>
@@ -601,6 +677,61 @@ $$</p>
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
