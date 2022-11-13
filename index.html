@@ -169,6 +169,150 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/13/Notes-on-VI-framework/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/Nancy.jpg">
+      <meta itemprop="name" content="HE lanxin">
+      <meta itemprop="description" content="Flung out of space">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nancy's Land">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/11/13/Notes-on-VI-framework/" class="post-title-link" itemprop="url">Notes on VI framework</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-11-13 11:27:49 / Modified: 12:16:44" itemprop="dateCreated datePublished" datetime="2022-11-13T11:27:49+08:00">2022-11-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>For a D-dimensional Multivariate Gaussian distribution <span class="math inline">\(\mathcal{N}(\mathbf{x}; \boldsymbol{\mu},
+\boldsymbol{\Sigma})=\frac{1}{(2\pi)^{D/2}}\frac{1}{|\boldsymbol{\Sigma}|^{1/2}}\exp
+\{ -\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T
+\boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}) \}\)</span>,
+its entropy has the form: <span class="math display">\[
+h(\mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma})) = -
+\int_{\mathbf{x}} \mathcal{N}(\mathbf{x}; \boldsymbol{\mu},
+\boldsymbol{\Sigma}) \log \mathcal{N}(\mathbf{x}; \boldsymbol{\mu},
+\boldsymbol{\Sigma}) d\mathbf{x} \\
+=- \int_{\mathbf{x}} \mathcal{N}(\mathbf{x}; \boldsymbol{\mu},
+\boldsymbol{\Sigma})  \log{
+\frac{1}{(2\pi)^{D/2}}\frac{1}{|\boldsymbol{\Sigma}|^{1/2}}\exp \{
+-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1}
+(\mathbf{x} - \boldsymbol{\mu}) \} } d\mathbf{x} \\
+= - \log{ \frac{1}{(2\pi)^{D/2}}\frac{1}{|\boldsymbol{\Sigma}|^{1/2}}}
+\int_\mathbf{x} \mathcal{N}(\mathbf{x}; \boldsymbol{\mu},
+\boldsymbol{\Sigma}) d\mathbf{x} + \frac{1}{2}\int_\mathbf{x}
+\mathcal{N}(\mathbf{x}; \boldsymbol{\mu}, \boldsymbol{\Sigma})
+(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} -
+\boldsymbol{\mu}) d\mathbf{x} \\
+= \frac{1}{2}\log{(2\pi)^{D} |\boldsymbol{\Sigma}|} + \frac{1}{2}
+\mathbb{E}_{p(\mathbf{\mathcal{x}})} tr[ \boldsymbol{\Sigma}^{-1}
+(\mathbf{x} - \boldsymbol{\mu}) (\mathbf{x} - \boldsymbol{\mu})^T] \\
+= \frac{1}{2}\log{(2\pi)^{D} |\boldsymbol{\Sigma}|} + \frac{1}{2} tr[
+\mathbb{E} \{ \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})
+(\mathbf{x} - \boldsymbol{\mu})^T \}] \\
+= \frac{1}{2}\log{(2\pi)^{D} |\boldsymbol{\Sigma}|} + \frac{1}{2} tr[
+\boldsymbol{\Sigma}^{-1}  \mathbb{E} \{ (\mathbf{x} - \boldsymbol{\mu})
+(\mathbf{x} - \boldsymbol{\mu})^T \}] \\
+= \frac{1}{2}\log{(2\pi)^{D} |\boldsymbol{\Sigma}|} + \frac{1}{2} tr[
+\boldsymbol{\Sigma}^{-1} \boldsymbol{\Sigma}\}] \\
+= \frac{1}{2}\log{(2\pi)^{D} |\boldsymbol{\Sigma}|} + \frac{1}{2} D \\
+= \frac{1}{2} \log{(2\pi e) ^{D} |\boldsymbol{\Sigma}|}
+\]</span></p>
+<p>System model: <span class="math display">\[
+\mathbf{r} = \mathbf{Hb+n}
+\]</span></p>
+<p>As defined, the variational free energy has the form <span class="math display">\[
+\mathcal{F}(\lambda) = \int_{\mathbf{b}}Q(\mathbf{b};\lambda)\log
+\frac{Q(\mathbf{b}; \lambda)}{p(\mathbf{b} | \mathbf{r})} d\mathbf{b}
+\approx  \int_{\mathbf{b}}Q(\mathbf{b};\lambda)\log \frac{Q(\mathbf{b};
+\lambda)}{p(\mathbf{r | b})p(\mathbf{b})} d\mathbf{b} \\
+= \int_{\mathbf{b}}Q(\mathbf{b};\lambda)\log \frac{Q(\mathbf{b};
+\lambda)}{p(\mathbf{b}; \mathbf{r})} d\mathbf{b}
+\label{eqn:energy function}
+\]</span> Then, the ZF detector can be derived by assuming <span class="math display">\[
+\left\{  
+             \begin{array}{**lr**}
+             p(\mathbf{b}) = constant \\
+             p(\mathbf{r|b}) = \mathcal{N}(\mathbf{r}; \mathbf{Hb},
+\sigma^2\mathbf{I}) \\
+             Q(\mathbf{b}) = \mathcal{N}(\mathbf{b}; \boldsymbol{\mu},
+\mathbf{\Sigma}),
+             \end{array}  
+\right.
+\]</span> where the posterior distribution <span class="math inline">\(Q(\mathbf{b})\)</span> is assumed to be Gaussian
+distribution.</p>
+<p>Accordingly, the energy function in (<span class="math inline">\(\ref{eqn:energy function}\)</span>) becomes <span class="math display">\[
+\mathcal{F}(\boldsymbol{\mu, \Sigma}) = \int_\mathbf{b}
+\mathcal{N}(\mathbf{b}; \boldsymbol{\mu, \Sigma}) \log
+\frac{\mathcal{N}(\mathbf{b}; \boldsymbol{\mu, \Sigma})}{c \cdot
+\mathcal{N}(\mathbf{r}; \mathbf{Hb}, \sigma^2\mathbf{I})}\\
+= -h(\mathcal{N}(\mathbf{b}; \boldsymbol{\mu, \Sigma})) -
+\int_{\mathbf{b}} \mathcal{N}(\mathbf{b}; \boldsymbol{\mu, \Sigma}) \log
+[ c\cdot \frac{1}{(2\pi)^{k/2}} \frac{1}{|\boldsymbol{\Sigma}|^{1/2}}
+\exp\{-\frac{1}{2\sigma^2} (\mathbf{r-Hb})^{T}(\mathbf{r-Hb})\} ]\\
+= -\frac{1}{2} \log{(2\pi e) ^{k} |\boldsymbol{\Sigma}|} - \log (c\cdot
+\frac{1}{(2\pi)^{k/2}}
+\frac{1}{|\boldsymbol{\Sigma}|^{1/2}})\int_{\mathbf{b}}
+\mathcal{N}(\mathbf{b}; \boldsymbol{\mu, \Sigma}) d\mathbf{b} +
+\frac{1}{2\sigma^2} \int_{\mathbf{b}} \mathcal{N}(\mathbf{b};
+\boldsymbol{\mu, \Sigma}) (\mathbf{r-Hb})^{T}(\mathbf{r-Hb})
+d\mathbf{b}\\
+= -\frac{1}{2} \log{(2\pi e) ^{k} |\boldsymbol{\Sigma}|} +
+\frac{1}{2}\log(c \cdot (2\pi)^k |\boldsymbol{\Sigma}|) +
+\frac{1}{2\sigma^2}\mathbb{E}_{p(\mathbf{b})}[\mathbf{r}^T\mathbf{r} -
+2\mathbf{r}^T\mathbf{Hb}+\mathbf{b}^T \mathbf{H}^T \mathbf{H}
+\mathbf{b}]\\
+=\frac{1}{2}\log c - \frac{k}{2} + \frac{1}{2\sigma^2}\{-2
+\mathbf{r}^T\mathbf{H}\boldsymbol{\mu} +
+\boldsymbol{\mu}\mathbf{H}^T\mathbf{H}\boldsymbol{\mu} +
+\textcolor{red}{tr[\mathbf{H}^T\mathbf{H}\boldsymbol{\Sigma}]} \}.
+\]</span></p>
+<hr>
+<p>==One great contribution of this paper is to give a proof for the
+convergence of SIC.==</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/25/establish-Pytorch-env-using-Anaconda/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -578,14 +722,14 @@ Till now the blue screen has been solved.</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
