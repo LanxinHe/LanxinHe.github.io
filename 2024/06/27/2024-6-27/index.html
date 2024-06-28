@@ -31,7 +31,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/Users/nancy/Library/Application%20Support/typora-user-images/Screenshot%202024-06-27%20at%2020.37.32.png">
 <meta property="article:published_time" content="2024-06-27T14:56:30.000Z">
-<meta property="article:modified_time" content="2024-06-28T01:11:56.898Z">
+<meta property="article:modified_time" content="2024-06-28T01:16:23.545Z">
 <meta property="article:author" content="HE lanxin">
 <meta property="article:tag" content="Paper-reading notes">
 <meta name="twitter:card" content="summary">
@@ -205,7 +205,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-06-28 09:11:56" itemprop="dateModified" datetime="2024-06-28T09:11:56+08:00">2024-06-28</time>
+                <time title="Modified: 2024-06-28 09:16:23" itemprop="dateModified" datetime="2024-06-28T09:16:23+08:00">2024-06-28</time>
               </span>
 
           
@@ -245,15 +245,16 @@ auxiliary variables and the ‘Gaussian integral trick’</li>
 <ul>
 <li>In <strong><em>continuous</em></strong> spaces, the gradient-based
 operators are often based on the <strong>Langevin diffusion</strong> or
-<strong>Hamiltonian Monte Carlo</strong>, and <strong>==they can be
-unified under a single complete framework.==</strong> (See Ref[1])</li>
+<strong>Hamiltonian Monte Carlo</strong>, and <strong><mark>they can be
+unified under a single complete framework.<mark></mark></mark></strong> (See
+Ref[1])</li>
 <li>Many probability mass functions are naturally thought of as the
 <em>restriction</em> of a continuous function (defined in e.g. <span class="math inline">\(\mathbb{R}^{d}\)</span>) to a discrete subset
 (e.g. <span class="math inline">\(\mathbb{N}^d\)</span>​). (See Ref[2],
 the GWG method, which can be seen as <strong>a gradient-based version of
 the ‘locally informed proposals’</strong> )</li>
 <li>However, the GWG method has unresolved
-<strong>==limitations==</strong>:
+<strong><mark>limitations<mark></mark></mark></strong>:
 <ul>
 <li>L.1 cannot update more than one dimension at a time.</li>
 <li>L.2 uses a first-order Taylor expansion, which does not exploit
@@ -275,22 +276,22 @@ constraint</strong>, enabling multiple-dimensions update (Addressing
 L.1)</li>
 <li>preconditioning is not possible (Leaving L.2)</li>
 </ul></li>
-<li>Auxiliary-variable gradient (AVG) sampler: ==(seems not so
-important, more to performance improvement?)==
+<li>Auxiliary-variable gradient (AVG) sampler: <mark>(seems not so
+important, more to performance improvement?)<mark>
 <ul>
 <li>viewing MALA as a <strong>marginalised auxiliary sampler</strong>
-(in Ref[4]) ==(This is the first paper to use this framework for
-discrete problems, but what are the advantages?)==</li>
+(in Ref[4]) <mark>(This is the first paper to use this framework for
+discrete problems, but what are the advantages?)<mark></mark></mark></li>
 <li>can be extended to include preconditioning (Addressing L.2), leading
 to Preconditioned AVG (PAVG)</li>
 <li>PAVG generalizes an existing auxiliary-variable scheme (in
 Ref[5])</li>
-</ul></li>
+</ul></mark></mark></li>
 </ul></li>
 </ul></li>
 </ul>
-<p>==? Comments: The goal of designing the NCG sampler is similar to
-that of the <strong><em>PATH AUXILIARY PROPOSAL</em></strong>.==</p>
+<p><mark>? Comments: The goal of designing the NCG sampler is similar to
+that of the <strong><em>PATH AUXILIARY PROPOSAL</em></strong>.<mark></mark></mark></p>
 <h2 id="background">2. Background</h2>
 <p>Aim: sample from distributions <span class="math inline">\(p(\mathbf{s})\)</span> defined over a discrete
 domain <span class="math inline">\(\mathcal{S}^d \subset
@@ -309,8 +310,8 @@ Z=\sum_{s\in\mathcal{S}^d}\exp(f(\mathbf{s}))
 s^k\}\)</span>​</li>
 </ul>
 <p><strong>Assume <span class="math inline">\(f\)</span> is the
-==restriction== of a differential function defined over <span class="math inline">\(\mathbb{R}^d\)</span>​.</strong> ==(What is a
-'restriction'?, See Ref[2])==</p>
+<mark>restriction<mark> of a differential function defined over <span class="math inline">\(\mathbb{R}^d\)</span>​.</mark></mark></strong> <mark>(What is a
+'restriction'?, See Ref[2])<mark></mark></mark></p>
 <h3 id="metropolis-hastings">2.1 Metropolis-Hastings</h3>
 <p>sampling a proposal: <span class="math inline">\(\mathbf{s}_{t+1}\sim
 q(\mathbf{s}_{t+1}|\mathbf{s}_t)\)</span> and accepting with probability
@@ -325,8 +326,8 @@ q_\epsilon(\mathbf{s}\mid\mathbf{s}_t)=\mathcal{N}(\mathbf{s};\mathbf{s}_t+\frac
 f(\mathbf{s}_t),\epsilon\boldsymbol{I})
 \]</span></p>
 <ul>
-<li>Skip the MH step: a discrete-time simulation of an SDE (==the
-diffusion process?==)</li>
+<li>Skip the MH step: a discrete-time simulation of an SDE (<mark>the
+diffusion process?<mark>)</mark></mark></li>
 </ul></li>
 <li><p>Preconditioned MALA:</p></li>
 </ul>
@@ -337,13 +338,15 @@ f(\mathbf{s}_t),\epsilon\Sigma\right)
 <h3 id="locally-informed-proposals">2.3 Locally-informed proposals</h3>
 <p>PIP( <em>pointwise-informed proposals</em>): <span class="math display">\[
 q(\mathbf{s}_{t+1}\mid\mathbf{s}_t)=\frac{\textcolor{red}{g(\exp(f(\mathbf{s}_{t+1})-f(\mathbf{s}_t)))}K_\sigma(\mathbf{s}_{t+1}\mid\mathbf{s}_t)}{Z_g(\mathbf{s}_t)}
-\]</span> ==? Note:== <span class="math display">\[
+\]</span> <mark>? Note:<mark> <span class="math display">\[
 \textcolor{red}{g(\exp(f(\mathbf{s}_{t+1})-f(\mathbf{s}_t))) = g(
 \dfrac{\exp(f(\mathbf{s}_{t+1}))}{\exp(f(\mathbf{s}_{t}))}) =
 g(\dfrac{p(\mathbf{s}_{t+1})}{p(\mathbf{s}_{t})})}
-\]</span> ==(? Ref[3] identifies a class of balancing functions <span class="math inline">\(g\)</span> that are optimal when the kernel <span class="math inline">\(K_{\sigma}\)</span> is sufficiently local, i.e.,
-<span class="math inline">\(\sigma\)</span> is small. Is this the case
-of a pure discrete situation?)==</p>
+\]</span> <mark>(? Ref[3] identifies a class of balancing functions
+<span class="math inline">\(g\)</span> that are optimal when the kernel
+<span class="math inline">\(K_{\sigma}\)</span> is sufficiently local,
+i.e., <span class="math inline">\(\sigma\)</span> is small. Is this the
+case of a pure discrete situation?)<mark></mark></mark></mark></mark></p>
 <h3 id="gibbs-with-gradients">2.4 Gibbs-with-Gradients</h3>
 <p>To reduce the cost of normalization, use a first-order Taylor
 expansion: <span class="math display">\[
