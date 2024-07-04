@@ -22,16 +22,17 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Enhanced gradient-based MCMC in discrete spaces   Screenshot 2024-06-27 at 20.37.32  @[TOC] Abstract Contribution:  introduce several discrete Metropolis-Hastings samplers that are conceptually-inspir">
+  <meta name="description" content="Enhanced gradient-based MCMC in discrete spaces   Screenshot 2024-06-27 at 20.37.32  [TOC] Abstract Contribution:  introduce several discrete Metropolis-Hastings samplers that are conceptually-inspire">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Enhanced gradient-based MCMC in discrete spaces">
 <meta property="og:url" content="http://example.com/2024/06/27/2024-6-27/index.html">
 <meta property="og:site_name" content="Nancy&#39;s Land">
-<meta property="og:description" content="Enhanced gradient-based MCMC in discrete spaces   Screenshot 2024-06-27 at 20.37.32  @[TOC] Abstract Contribution:  introduce several discrete Metropolis-Hastings samplers that are conceptually-inspir">
+<meta property="og:description" content="Enhanced gradient-based MCMC in discrete spaces   Screenshot 2024-06-27 at 20.37.32  [TOC] Abstract Contribution:  introduce several discrete Metropolis-Hastings samplers that are conceptually-inspire">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/Users/nancy/Library/Application%20Support/typora-user-images/Screenshot%202024-06-27%20at%2020.37.32.png">
+<meta property="og:image" content="http://example.com/2024/06/27/2024-6-27/nancy/Documents/markdown_files/Paper%20Notes/Enhanced%20gradient-based%20MCMC%20in%20discrete%20sapces/image-20240629105745947.png">
 <meta property="article:published_time" content="2024-06-27T14:56:30.000Z">
-<meta property="article:modified_time" content="2024-06-28T01:21:23.732Z">
+<meta property="article:modified_time" content="2024-07-04T02:02:11.160Z">
 <meta property="article:author" content="HE lanxin">
 <meta property="article:tag" content="Paper-reading notes">
 <meta name="twitter:card" content="summary">
@@ -205,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-06-28 09:21:23" itemprop="dateModified" datetime="2024-06-28T09:21:23+08:00">2024-06-28</time>
+                <time title="Modified: 2024-07-04 10:02:11" itemprop="dateModified" datetime="2024-07-04T10:02:11+08:00">2024-07-04</time>
               </span>
 
           
@@ -226,7 +227,7 @@ gradient-based MCMC in discrete spaces</strong></h1>
 <figcaption aria-hidden="true">Screenshot 2024-06-27 at
 20.37.32</figcaption>
 </figure>
-<p>@[TOC]</p>
+<p>[TOC]</p>
 <h2 id="abstract">Abstract</h2>
 <p>Contribution:</p>
 <ol type="1">
@@ -354,10 +355,194 @@ q(\mathbf{s}\mid\mathbf{s}_t)=\frac{\textcolor{blue}{\exp\left(\frac12\nabla
 f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t)\right)}\mathbb{I}(\mathbf{s}\in
 H_1(\mathbf{s}_t))}{\sum_{\mathbf{s}\in
 H_1(\mathbf{s}_t)}\textcolor{blue}{\exp\left(\frac12\nabla
-f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t)\right)}}
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t)\right)}}\label{eqn:gwg
+proposal}
 \]</span> <span class="math inline">\(H_{1}(\mathbf{s}_t)\)</span> is a
 Hamming ball of radius <span class="math inline">\(1\)</span> around
-<span class="math inline">\(\mathbf{s}_t\)</span>.</p>
+<span class="math inline">\(\mathbf{s}_t\)</span>​.</p>
+<h2 id="discrete-analogues-to-mala">3. Discrete analogues to MALA</h2>
+<h3 id="norm-constrained-gradient-sampler-ncg">3.1 Norm-constrained
+gradient sampler: NCG</h3>
+<p>To update more than one dimension at a time.</p>
+<p>Use a <strong>soft norm constraint</strong> for eqn<span class="math inline">\(\eqref{eqn:gwg proposal}\)</span>: <span class="math display">\[
+q_\epsilon(\mathbf{s}\mid\mathbf{s}_t)\propto\exp\left(\frac12\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t)\right)\exp\left(-\frac1{2\epsilon}\|\mathbf{s}-\mathbf{s}_t\|_2^2\right)\label{eqn:MALA
+proposal}
+\]</span> <mark>(? As discussed in Ref[3], this first-order informed
+proposal corresponds to the proposal of MALA)<mark></mark></mark></p>
+<p>Then restrict <span class="math inline">\(\mathbf{s}\)</span> to a
+discrete state-space <span class="math inline">\(\mathcal{S}^d \subset
+\mathbb{R}^d\)</span> to get: <span class="math display">\[
+q_{\epsilon}(\mathbf{s}\mid\mathbf{s}_{t})=\prod_{i=1}^{d}\sigma{\left(\left[\frac{1}{2}\nabla
+f(\mathbf{s}_{t})_{i}+\frac{1}{\epsilon}\mathrm{s}_{t,i}\right]\mathrm{s}_{i}-\frac{1}{2\epsilon}\mathrm{s}_{i}^{2}\right)},\quad
+\mathrm{\sigma(x):=\frac{\exp(x)}{\sum_{\mathcal{S}}\exp(x)}}
+\]</span> <mark>(? The eqn<span class="math inline">\(\eqref{eqn:MALA
+proposal}\)</span> can be rewritten as follows, but how does this <span class="math inline">\(d\)</span>-dimensional distribution be factorised
+into <span class="math inline">\(d\)</span> independent 1-dimensional
+distributions?)<mark> <span class="math display">\[
+q_\epsilon(\mathbf{s}\mid\mathbf{s}_t)\propto
+\textcolor{blue}{\exp\left(\frac12\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t)\right)\exp\left(-\frac1{2\epsilon}\|\mathbf{s}-\mathbf{s}_t\|_2^2\right)}\\
+= \exp\left(\frac12\nabla f(\mathbf{s}_t)^T\mathbf{s}-\frac12\nabla
+f(\mathbf{s}_t)^T\mathbf{s}_t-\frac1{2\epsilon}(\mathbf{s}^T \mathbf{s}
+- 2\mathbf{s}_{t}^T\mathbf{s}+\mathbf{s}_{t}^T\mathbf{s}_{t})\right)\\
+\propto \exp \left(\frac12\nabla f(\mathbf{s}_t)^T\mathbf{s} +
+\frac{1}{\epsilon}\mathbf{s}_{t}^T\mathbf{s} -
+\frac1{2\epsilon}\mathbf{s}^T\mathbf{s}  \right)
+\]</span></mark></mark></p>
+<blockquote>
+<p>Remark: this is independently discovered by Ref[6], the DMALA
+method.</p>
+<p>An alternative rather than a generalisation of GWG.</p>
+</blockquote>
+<h4 id="the-problem-of-preconditioning">3.1.1 The problem of
+preconditioning</h4>
+<p>The naive preconditioned form <span class="math inline">\((\mathbf{s}-\mathbf{s}_t)^T\Sigma^{-1}(\mathbf{s}-\mathbf{s}_t)\)</span>
+leads to a <em>pairwise MRF</em>, whichi is intractable in general.</p>
+<p>Possible solution: use sparse form for <span class="math inline">\(\Sigma^{-1}\)</span>, like diagonal. Or the
+following AVG framework.</p>
+<h3 id="preconditioned-auxiliary-variable-gradient-sampler-avg-and-pavg">3.2
+(Preconditioned) Auxiliary Variable Gradient sampler: AVG and PAVG</h3>
+<p>First for MALA to be derived as an auxiliary variable scheme:</p>
+<ul>
+<li><p>augment the continuous state <span class="math inline">\(\mathbf{s} \in \mathbb{R}^d\)</span> with Gaussian
+auxiliary variable <span class="math inline">\(\mathbf{z} \in
+\mathbb{R}^d\)</span>. Then the unnormalised target density becomes
+<span class="math inline">\(\pi(\mathbf{s},\mathbf{z})= \pi(\mathbf{s})
+p(\mathbf{z} | \mathbf{s}) \propto
+\exp(f(\mathbf{s}))\mathcal{N}(\mathbf{z};\mathbf{s}/\sqrt{\epsilon/2},\boldsymbol{I}).\)</span></p></li>
+<li><p>block-Gibbs sampling (but this is intractable for general <span class="math inline">\(f\)</span>):</p>
+<ul>
+<li>Step1: sampling <span class="math inline">\(\mathbf{z}_t\sim\mathcal{N}(\mathbf{z};\mathbf{s}_t/\sqrt{\epsilon/2},\boldsymbol{I})\)</span></li>
+<li>Step2: sampling <span class="math inline">\(\mathbf{s}_{t+1}\sim\pi(\mathbf{s}\mid\mathbf{z}_t)\propto
+\pi(\mathbf{s}, \mathbf{z}_t)\)</span></li>
+</ul></li>
+<li><p>Consider with the MH step:</p>
+<ul>
+<li><p>the proposal (approximate <span class="math inline">\(\pi(\mathbf{s})|_{\mathbf{s} =\mathbf{s}_t}
+\propto \exp (f(\mathbf{s}))\approx
+\textcolor{blue}{\exp(f(\mathbf{s}_t)+\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t))}\)</span>, using first order
+Taylor expansion): <span class="math display">\[
+\begin{gathered}
+q_{\epsilon}(\mathbf{s}\mid\mathbf{z}_{t},\mathbf{s}_{t}) \propto
+\textcolor{blue}{\exp(f(\mathbf{s}_t)+\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t))}\mathcal{N}(\mathbf{z}_t;\mathbf{s}/\sqrt{\epsilon/2},\boldsymbol{I})
+\\
+=\mathcal{N}(\mathbf{s};\sqrt{\epsilon/2}\mathbf{z}_t+(\epsilon/2)\nabla
+f(\mathbf{s}_t),(\epsilon/2)\boldsymbol{I}),
+\end{gathered}
+\]</span></p>
+<p><mark>(?The derivation might be as follows)<mark> <span class="math display">\[
+\textcolor{blue}{\exp(f(\mathbf{s}_t)+\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t))}\mathcal{N}(\mathbf{z}_t;\mathbf{s}/\sqrt{\epsilon/2},\boldsymbol{I})
+\\
+= \exp \left( f(\mathbf{s}_t)+\nabla f(\mathbf{s}_t)^T\mathbf{s}-
+f(\mathbf{s}_t)^T\mathbf{s}_t - \frac{1}{2}(\mathbf{z}_{t}^T
+\mathbf{z}_{t} - 2\mathbf{s}^T\mathbf{z}_{t}/\sqrt{\epsilon / 2} +
+\frac2{\epsilon}\mathbf{s}^T\mathbf{s} ) \right) \\
+= \exp \left(-\frac1{\epsilon} \mathbf{s}^T\mathbf{s} +
+\sqrt{2/\epsilon} \mathbf{s}^T\mathbf{z}_t + \mathbf{s}^T \nabla
+f(\mathbf{s}_t)\right)\exp(C)\\
+\propto \exp \left(-\frac{1}{\epsilon} (\mathbf{s}^T\mathbf{s} -
+\sqrt{2\epsilon} \mathbf{s}^T \mathbf{z}_{t} - \epsilon \mathbf{s}^T
+\nabla f(\mathbf{s}_t))\right) \\
+\propto \exp \left( -\frac1{\epsilon} \|\mathbf{s} - \sqrt{\epsilon/2}
+\mathbf{z}_{t} - (\epsilon / 2) \nabla f(\mathbf{s}_{t})\|^2\right)
+\]</span></mark></mark></p></li>
+<li><p>Then one can perform the block-wise MH sampling.</p></li>
+</ul></li>
+<li><p>Or alternatively, to marginalise out the latent variables,
+yielding the MALA proposal: <span class="math display">\[
+q_\epsilon(\mathbf{s}\mid\mathbf{s}_t)=\int
+N(\mathbf{z};\mathbf{s}_t/\sqrt{\epsilon/2},\boldsymbol{I})q_\epsilon(\mathbf{s}\mid\mathbf{z}_t,\mathbf{s}_t)d\mathbf{z}=\mathcal{N}(\mathbf{s};\mathbf{s}_t+(\epsilon/2)\nabla
+f(\mathbf{s}_t),\epsilon\boldsymbol{I}).
+\]</span></p></li>
+<li><p>Take <span class="math inline">\(\mathbf{s}\)</span> to belong to
+a discrete state space <span class="math inline">\(\mathcal{S}^d \subset
+\mathbb{R}^d\)</span> , then the proposal <span class="math inline">\(q_{\epsilon}(\mathbf{s}\mid\mathbf{z}_{t},\mathbf{s}_{t})\)</span>
+is able to be fully factorised as <span class="math inline">\(\prod_{i=1}^dq_{\epsilon,i}(\mathrm{s}_i\mid\mathrm{z}_{t,i},\mathrm{s}_t)\)</span>,
+with each factor: <span class="math display">\[
+q_{\epsilon,i}(\mathrm{s}_i\mid\mathrm{z}_{t,i},\mathbf{s}_t)=\sigma{\left(\left[\nabla
+f(\mathbf{s}_t)_i+\sqrt{\frac2\epsilon}\mathrm{z}_{t,i}\right]s_i-\frac1\epsilon
+s_i^2\right)},\text{\quad}\sigma(\mathrm{x})=\frac{\exp(\mathrm{x})}{\sum_{\mathcal{S}}\exp(\mathrm{x})}.
+\]</span></p></li>
+<li><p>Performing block-wise MH sampling on this propoasal gives the
+<mark><strong>AVG</strong><mark> sampler (Eq. 12 below is the above
+equation)</mark></mark></p>
+<p><img src="/2024/06/27/2024-6-27/nancy/Documents/markdown_files/Paper Notes/Enhanced gradient-based MCMC in discrete sapces/image-20240629105745947.png" alt="image-20240629105745947" style="zoom:50%;"></p></li>
+<li><p>Marginalising out <span class="math inline">\(\mathbf{z}_t\)</span> in the discrete case
+requires the expectation calculation but without a closed-form.</p></li>
+</ul>
+<h4 id="the-promise-of-preconditioning">3.2.1 The promise of
+preconditioning</h4>
+<p>Problem: directly replace the conditional Gaussian by <span class="math inline">\(\mathcal{N}(\mathbf{z}_t; (\epsilon/2
+\Sigma)^{-1/2} \mathbf{s}, \mathbf{I})\)</span>​ leads to the intractable
+pairwise Markov random field.</p>
+<blockquote>
+<ul>
+<li><p>For a continuous state <span class="math inline">\(\mathbf{s} \in
+\mathbb{R}^d\)</span>, the proposal corresponding to the unnormalised
+target density <span class="math inline">\(\pi(\mathbf{s},\mathbf{z})=\exp(f(\mathbf{s}))\mathcal{N}(\mathbf{z};\Sigma^{-1/2}\mathbf{s},\boldsymbol{I})\)</span>
+is: (<span class="math inline">\(\pi(\mathbf{s} | \mathbf{z}_t) \propto
+\pi(\mathbf{s}, \mathbf{z}_t) = \pi (\mathbf{s}) p(\mathbf{z}|
+\mathbf{s})\)</span>) <span class="math display">\[
+\begin{aligned}
+q(\mathbf{s}\mid\mathbf{z}_{t},\mathbf{s}_{t}) &amp;
+\textcolor{blue}{\propto p(\mathbf{s}, \mathbf{z}_t | \mathbf{s}_t) =
+p(\mathbf{s}|\mathbf{s}_t) p(\mathbf{z}_t| \mathbf{s}, \mathbf{s}_t)} \\
+&amp; = \exp(f(\mathbf{s}_t)+\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t))\mathcal{N}(\mathbf{z}_t;\Sigma^{-1/2}\mathbf{s},\boldsymbol{I})  \\
+&amp;\overset{(a)}{\propto}\exp\left(-\frac12(\mathbf{s}-\boldsymbol{\mu})^T\Sigma^{-1}(\mathbf{s}-\boldsymbol{\mu})\right)\quad\mathrm{~where~}\quad\boldsymbol{\mu}:=\Sigma^{1/2}\mathbf{z}_t+\Sigma\nabla
+f(\mathbf{s}_t) \\
+&amp;=\mathcal{N}(\mathbf{s};\Sigma^{1/2}\mathbf{z}_t+\Sigma\nabla
+f(\mathbf{s}_t),\Sigma)
+\end{aligned}
+\]</span> Marginalise out the latents: <span class="math display">\[
+\int\mathcal{N}(\mathbf{z}_t;\Sigma^\textcolor{red}{-1/2}\mathbf{s}_t,\boldsymbol{I})\mathcal{N}(\mathbf{s};\Sigma^{1/2}\mathbf{z}_t+\Sigma\nabla
+f(\mathbf{s}_t),\Sigma)d\mathbf{z}_t=\mathcal{N}(\mathbf{s};\mathbf{s}_t+\Sigma\nabla
+f(\mathbf{s}_t),2\Sigma)
+\]</span> This is equal to the PMALA by redefining <span class="math inline">\(\Sigma\)</span> as <span class="math inline">\(\frac{\epsilon}{2} \Sigma\)</span>.</p></li>
+<li><p>If assuming <span class="math inline">\(\mathbf{s} \in
+\mathcal{S}^d\)</span>, <span class="math inline">\((a)\)</span> is
+<mark>no longer proportional to a Gaussian distribution<mark>, but a
+discrete pairwise MRF.</mark></mark></p></li>
+</ul>
+</blockquote>
+<p><strong>Solution:</strong></p>
+<ul>
+<li><p>Step 1: Make a second-order approximation of the target <span class="math inline">\(f(\mathbf{s})\approx f(\mathbf{s}_t)+\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t)+(1/2)(\mathbf{s}-\mathbf{s}_t)^T\Sigma(\mathbf{s}-\mathbf{s}_t)\)</span></p></li>
+<li><p>Step 2: Define an unnormalized joint distribution <span class="math inline">\(\pi(\mathbf{s},\mathbf{z})=\exp(f(\mathbf{s}))\mathcal{N}(\mathbf{z};\Sigma_\epsilon^{1/2}\mathbf{s}_t,\boldsymbol{I})\)</span>
+with <span class="math inline">\(\Sigma_{\epsilon}:=\Sigma+(2/\epsilon)\boldsymbol{I}\)</span></p></li>
+<li><p>MH step on the proposal: (PAVG, using the Gaussian integral
+trick) <span class="math display">\[
+\begin{aligned}
+q_\epsilon(\mathbf{s}\mid\mathbf{z}_t,\mathbf{s}_t)
+&amp; \propto \exp(f(\mathbf{s}_t)+\nabla
+f(\mathbf{s}_t)^T(\mathbf{s}-\mathbf{s}_t)+(1/2)(\mathbf{s}-\mathbf{s}_t)^T\Sigma(\mathbf{s}-\mathbf{s}_t))\left.\mathcal{N}(\mathbf{z};\Sigma_\epsilon^{1/2}\mathbf{s},\boldsymbol{I})\right)
+\\
+&amp; \propto \exp\left(\left[\nabla
+f(\mathbf{s}_t)-\Sigma\mathbf{s}_t+\Sigma_\epsilon^{1/2}\mathbf{z}_t\right]^T\mathbf{s}-(1/\epsilon)\mathbf{s}^T\mathbf{s}\right).
+\quad \textcolor{blue}{\mathrm{quadratic}\,\, \mathrm{terms}\,\,
+\mathrm{in}\,\, \mathbf{s}\,\,\mathrm{cancel}\,\, \mathrm{out}}\\
+&amp;=\prod_{i=1}^d\sigma\Big(\Big[\nabla
+f(\mathbf{s}_t)_i-(\Sigma\mathbf{s}_t)_i+(\Sigma_\epsilon^{1/2}\mathbf{z}_t)_i\Big]\mathrm{s}_i-\frac1\epsilon\mathrm{s}_i^2\Big),\quad
+\quad\mathrm{where}\quad\sigma(\mathrm{x})=\frac{\exp(\mathrm{x})}{\sum_\mathcal{S}\exp(\mathrm{x})}
+\end{aligned}
+\]</span></p></li>
+</ul>
+<p><strong>Remark</strong>:</p>
+<p>​ <span class="math inline">\(\Sigma = 0\)</span>​ recovers AVG</p>
+<h4 id="choice-of-matrix-sigma">3.2.2 Choice of matrix <span class="math inline">\(\Sigma\)</span>​</h4>
+<ul>
+<li>estimate an empirical covariance matrix <span class="math inline">\(\Sigma_{emp}\)</span> from a ‘dataset’ of samples
+<span class="math inline">\(\mathcal{D}\)</span>​ obtained during an
+initial burn-in period.</li>
+<li>re-scaling it by an adaptively learned parameter <span class="math inline">\(\gamma\)</span>​.</li>
+</ul>
+<h2 id="related-work">4. Related Work</h2>
+<p>The DMALA in ref[6] coincides with NCG.</p>
 <h2 id="reference">Reference</h2>
 <p>[1] Yi-An Ma, Tianqi Chen, and Emily Fox. A complete recipe for
 stochastic gradient MCMC. <em>Advances in neural</em> <em>information
@@ -377,6 +562,9 @@ Society: Series B (Statistical Methodology)</em>, 80(4):749–767,
 markov random fields. In <em>Proceedings of the Thirteenth International
 Conference on Artificial Intelligence and Statistics</em>, pp. 517–524.
 JMLR Workshop and Conference Proceedings, 2010.</p>
+<p>[6] Ruqi Zhang, Xingchao Liu, and Qiang Liu. A langevin-like sampler
+for discrete distributions. In <em>International Conference on Machine
+Learning</em>, pp. 26375–26396. PMLR, 2022.</p>
 
     </div>
 
@@ -459,7 +647,11 @@ JMLR Workshop and Conference Proceedings, 2010.</p>
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#enhanced-gradient-based-mcmc-in-discrete-spaces"><span class="nav-number">1.</span> <span class="nav-text">Enhanced
 gradient-based MCMC in discrete spaces</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract"><span class="nav-number">1.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#background"><span class="nav-number">1.3.</span> <span class="nav-text">2. Background</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#metropolis-hastings"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 Metropolis-Hastings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mala-and-its-preconditioned-variant"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 MALA and its
-preconditioned variant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locally-informed-proposals"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3 Locally-informed proposals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gibbs-with-gradients"><span class="nav-number">1.3.4.</span> <span class="nav-text">2.4 Gibbs-with-Gradients</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">1.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+preconditioned variant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#locally-informed-proposals"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.3 Locally-informed proposals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gibbs-with-gradients"><span class="nav-number">1.3.4.</span> <span class="nav-text">2.4 Gibbs-with-Gradients</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#discrete-analogues-to-mala"><span class="nav-number">1.4.</span> <span class="nav-text">3. Discrete analogues to MALA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#norm-constrained-gradient-sampler-ncg"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 Norm-constrained
+gradient sampler: NCG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-problem-of-preconditioning"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 The problem of
+preconditioning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#preconditioned-auxiliary-variable-gradient-sampler-avg-and-pavg"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2
+(Preconditioned) Auxiliary Variable Gradient sampler: AVG and PAVG</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#the-promise-of-preconditioning"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">3.2.1 The promise of
+preconditioning</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#choice-of-matrix-sigma"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">3.2.2 Choice of matrix \(\Sigma\)​</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#related-work"><span class="nav-number">1.5.</span> <span class="nav-text">4. Related Work</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">1.6.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
